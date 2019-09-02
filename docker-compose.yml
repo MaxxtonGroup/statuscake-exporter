@@ -1,0 +1,32 @@
+version: '3'
+services:
+  compiler:
+    image: statuscake-exporter:dev
+    build: .
+    volumes:
+      - ./dist:/app/dist
+      - ./src:/app/src:ro
+      - ./tsconfig.json:/app/tsconfig.json
+    command:
+      - yarn
+      - run
+      - watch
+  nodemon:
+    image: statuscake-exporter:dev
+    build: .
+    volumes:
+      - ./dist:/app/dist
+    command:
+      - ./node_modules/.bin/nodemon
+      - --inspect=0.0.0.0:9000
+      - --nolazy
+      - dist/index.js
+    ports:
+      - '8000:8080'
+      - '9000:9000'
+    environment:
+      - 'LOGGER_LEVEL=debug'
+      - 'STATUSCAKE_API_KEY=YOURKEY'
+      - 'STATUSCAKE_USERNAME=YOURUSER'
+    depends_on:
+      - compiler
