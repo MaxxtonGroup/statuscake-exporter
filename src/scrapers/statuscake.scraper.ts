@@ -34,7 +34,9 @@ export class StatuscakeScraper {
     this.statuscakeClient.getTests().subscribe(tests => {
       tests.forEach(test => {
         this.statuscakeUp.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Status === "Up" ? 1 : 0);
-        this.statuscakeUptime.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Uptime);
+        if (typeof test.Uptime === "number") {
+          this.statuscakeUptime.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Uptime);
+        }
       });
     });
 
