@@ -10,4 +10,5 @@ export interface StatusCakeTest {
   TestID: string;
   Status: string;
   Uptime: number;
+  Paused: boolean;
 }

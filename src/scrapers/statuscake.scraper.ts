@@ -12,6 +12,7 @@ export class StatuscakeScraper {
 
   private statuscakeUp: Gauge;
   private statuscakeUptime: Gauge;
+  private statuscakePaused: Gauge;
 
   constructor(private statuscakeClient: StatuscakeClient) {
 
@@ -26,6 +27,12 @@ export class StatuscakeScraper {
       help: "One day percentage uptime for this website",
       labelNames: ["website", "testId", "name"]
     });
+
+    this.statuscakePaused = new Gauge({
+      name: "statuscake_paused",
+      help: "Is the test paused?",
+      labelNames: ["website", "testId", "name"]
+    });
   }
 
   public async scrape(): Promise<void> {
@@ -37,6 +44,7 @@ export class StatuscakeScraper {
         if (typeof test.Uptime === "number") {
           this.statuscakeUptime.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Uptime);
         }
+        this.statuscakePaused.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Paused ? 1 : 0);
       });
     });
 
