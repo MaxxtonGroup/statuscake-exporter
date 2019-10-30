@@ -39,13 +39,15 @@ export class StatuscakeScraper {
     winston.info("Scrape Statuscake");
 
     this.statuscakeClient.getTests().subscribe(tests => {
-      tests.forEach(test => {
-        this.statuscakeUp.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Status === "Up" ? 1 : 0);
-        if (typeof test.Uptime === "number") {
-          this.statuscakeUptime.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Uptime);
-        }
-        this.statuscakePaused.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Paused ? 1 : 0);
-      });
+      if (tests) {
+        tests.forEach(test => {
+          this.statuscakeUp.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Status === "Up" ? 1 : 0);
+          if (typeof test.Uptime === "number") {
+            this.statuscakeUptime.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Uptime);
+          }
+          this.statuscakePaused.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Paused ? 1 : 0);
+        });
+      }
     });
 
   }
