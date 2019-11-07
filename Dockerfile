@@ -1,4 +1,4 @@
-FROM node:8
+FROM node:8-alpine
 WORKDIR /app
 EXPOSE 8080
 CMD node dist/index.js
