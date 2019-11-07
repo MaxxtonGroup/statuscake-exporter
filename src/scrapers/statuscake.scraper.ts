@@ -37,6 +37,9 @@ export class StatuscakeScraper {
 
   public async scrape(): Promise<void> {
     winston.info("Scrape Statuscake");
+    this.statuscakeUp.reset();
+    this.statuscakeUptime.reset();
+    this.statuscakePaused.reset();
 
     this.statuscakeClient.getTests().subscribe(tests => {
       if (tests) {
