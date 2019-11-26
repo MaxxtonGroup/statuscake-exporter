@@ -42,7 +42,7 @@ export class StatuscakeScraper {
     this.statuscakePaused.reset();
 
     this.statuscakeClient.getTests().subscribe(tests => {
-      if (tests) {
+      if (tests && tests instanceof Array) {
         tests.forEach(test => {
           this.statuscakeUp.set({ website: test.WebsiteURL, testId: test.TestID, name: test.WebsiteName }, test.Status === "Up" ? 1 : 0);
           if (typeof test.Uptime === "number") {
