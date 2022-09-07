@@ -38,7 +38,7 @@
     "@types/request": "^2.0.8",
     "@types/request-promise": "^4.1.39",
     "@types/winston": "^2.3.7",
-    "nodemon": "^1.17.1",
+    "nodemon": "^2.0.19",
     "tslint": "^5.7.0",
     "typescript": "^2.6.2"
   }
